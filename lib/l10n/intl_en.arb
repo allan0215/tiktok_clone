@@ -1,0 +1,61 @@
+{
+  "signUpTitle": "Sign up for {nameOfTheApp} {when}",
+  "@signUpTitle": {
+    "description": "The title people see when they open the app",
+    "placeholders": {
+      "nameOfTheApp": {
+        "type": "String",
+        "example": "TicTok"
+      },
+      "when" :{
+        "type": "DateTime",
+        "format": "y"
+      }
+    }
+  },
+  "LoginTitle": "Log into your {nameOfTheApp} account",
+  "@LoginTitle": {
+    "description": "The title people see when they open the log in screen",
+    "placeholders": {
+      "nameOfTheApp": {
+        "type": "String",
+        "example": "TicTok"
+      }
+    }
+  },
+  "signUpSubTitle": "Create a profile, follow other accounts, make your own {videoCount, plural, =0{no videos} =1 {video} other{videos}}, and more.",
+  "emailPasswordButton": "Use email & password",
+  "appleButton": "Continue with Apple",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "logIn": "Log in {gender, select, male{sir} female{madam} other{human}}",
+  "likeCount": "{value}",
+  "@likeCount": {
+    "description": "like Count",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentCount": "{value}",
+  "@commentCount": {
+    "description": "like Count",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "comments": "{value} {value2, plural,  =1 {comment} other{comments}}",
+  "@comments": {
+    "description": "like Count",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  }
+}

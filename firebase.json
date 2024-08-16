@@ -1,0 +1,47 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "tik-tok-clone-seanwho",
+          "appId": "1:75198792000:android:2e48fd222b53e23147baa5",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "tik-tok-clone-seanwho",
+          "appId": "1:75198792000:ios:ee55bb061bed1a7847baa5",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tik-tok-clone-seanwho",
+          "configurations": {
+            "android": "1:75198792000:android:2e48fd222b53e23147baa5",
+            "ios": "1:75198792000:ios:ee55bb061bed1a7847baa5",
+            "web": "1:75198792000:web:523e16009f70016e47baa5"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}

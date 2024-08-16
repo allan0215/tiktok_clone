@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "75198792000",
+    "project_id": "tik-tok-clone-seanwho",
+    "storage_bucket": "tik-tok-clone-seanwho.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75198792000:android:2e48fd222b53e23147baa5",
+        "android_client_info": {
+          "package_name": "com.example.tiktok_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvp-CJstWqioEsRFo_pQMlReHz-yH5Xj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
