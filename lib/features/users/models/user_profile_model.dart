@@ -18,13 +18,14 @@ class UserProfileModel {
         link = "",
         hasAvatar = false;
 
-  Map<String, String> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "email": email,
       "name": name,
       "uid": uid,
       "bio": bio,
       "link": link,
+      "hasAvatar": hasAvatar
     };
   }
 

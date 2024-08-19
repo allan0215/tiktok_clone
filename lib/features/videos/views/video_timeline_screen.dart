@@ -6,7 +6,8 @@ import 'package:tiktok_clone/features/videos/views/widgets/video_post.dart';
 class VideoTimelineScreen extends ConsumerStatefulWidget {
   final bool _isSelected;
 
-  const VideoTimelineScreen({super.key, required bool isSelected}) : _isSelected = isSelected;
+  const VideoTimelineScreen({super.key, required bool isSelected})
+      : _isSelected = isSelected;
 
   @override
   VideoTimelineScreenState createState() => VideoTimelineScreenState();
@@ -26,7 +27,8 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   ];
 
   void _onPageChanged(int page) {
-    _pageController.animateToPage(page, duration: _scrollDuration, curve: _scrollCurve);
+    _pageController.animateToPage(page,
+        duration: _scrollDuration, curve: _scrollCurve);
     if (page == _itemCount - 1) {
       setState(() {});
     }
@@ -73,8 +75,13 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
                 onPageChanged: _onPageChanged,
                 scrollDirection: Axis.vertical,
                 itemCount: videos.length,
-                itemBuilder: (context, index) =>
-                    VideoPost(onVideoFinished: _onVideoFinished, index: index)),
+                itemBuilder: (context, index) {
+                  final videoData = videos[index];
+                  return VideoPost(
+                      onVideoFinished: _onVideoFinished,
+                      index: index,
+                      videoData: videoData);
+                }),
           ),
         );
   }

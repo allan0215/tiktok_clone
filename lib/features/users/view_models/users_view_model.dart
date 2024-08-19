@@ -33,8 +33,8 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
   }
 
   void setName(String name) {
-    state = AsyncData(
-        state.value?.copyWith(name: name) ?? UserProfileModel.empty().copyWith(name: name));
+    state = AsyncData(state.value?.copyWith(name: name) ??
+        UserProfileModel.empty().copyWith(name: name));
   }
 
   Future<void> createProfile(UserCredential credentail) async {
@@ -58,5 +58,5 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
   }
 }
 
-final usersProvider =
-    AsyncNotifierProvider<UsersViewModel, UserProfileModel>(() => UsersViewModel());
+final usersProvider = AsyncNotifierProvider<UsersViewModel, UserProfileModel>(
+    () => UsersViewModel());

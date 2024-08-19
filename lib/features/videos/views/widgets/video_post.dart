@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/comment.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
@@ -14,14 +15,20 @@ import 'package:visibility_detector/visibility_detector.dart';
 class VideoPost extends ConsumerStatefulWidget {
   final Function _onVideoFinished;
   final int index;
-  const VideoPost({super.key, required onVideoFinished, required this.index})
-      : _onVideoFinished = onVideoFinished;
+  final VideoModel videoData;
+  const VideoPost({
+    super.key,
+    required onVideoFinished,
+    required this.index,
+    required this.videoData,
+  }) : _onVideoFinished = onVideoFinished;
 
   @override
   VideoPostState createState() => VideoPostState();
 }
 
-class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderStateMixin {
+class VideoPostState extends ConsumerState<VideoPost>
+    with SingleTickerProviderStateMixin {
   late final VideoPlayerController _videoPlayerController;
 
   // video state
@@ -59,14 +66,16 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
-      if (_videoPlayerController.value.duration == _videoPlayerController.value.position) {
+      if (_videoPlayerController.value.duration ==
+          _videoPlayerController.value.position) {
         widget._onVideoFinished();
       }
     }
   }
 
   void _initVideoPlayer() async {
-    _videoPlayerController = VideoPlayerController.asset("assets/video/taigo_vid.mp4");
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/video/taigo_vid.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     if (kIsWeb) {
@@ -110,7 +119,9 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
   }
 
   bool hasTextOverflow(String text, TextStyle style,
-      {double minWidth = 0, double maxWidth = double.infinity, int maxLines = 2}) {
+      {double minWidth = 0,
+      double maxWidth = double.infinity,
+      int maxLines = 2}) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text, style: style),
       maxLines: maxLines,
@@ -130,15 +141,19 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
       value: 1.5,
       duration: _animationDuration,
     );
-    _isTextOverFlowed = hasTextOverflow(_caption, _captionStyle, maxLines: 1, maxWidth: 200);
-    if (ref.read(playbackConfigProvider).muted) _videoPlayerController.setVolume(0);
+    _isTextOverFlowed =
+        hasTextOverflow(_caption, _captionStyle, maxLines: 1, maxWidth: 200);
+    if (ref.read(playbackConfigProvider).muted)
+      _videoPlayerController.setVolume(0);
 
     _onPlaybackConfigChanged();
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (!mounted) return;
-    if (info.visibleFraction >= 0.5 && !_isPaused && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction >= 0.5 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       if (ref.read(playbackConfigProvider).autoPlay) {
         _videoPlayerController.play();
       }
@@ -215,8 +230,8 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "@SeanWho?",
+                Text(
+                  "@${widget.videoData.creator}",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -230,7 +245,7 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
                     SizedBox(
                       width: 200,
                       child: Text(
-                        _caption,
+                        widget.videoData.description,
                         style: _captionStyle,
                         maxLines: _seeMore ? null : 1,
                         overflow: _seeMore ? null : TextOverflow.ellipsis,
@@ -242,7 +257,9 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
                       child: GestureDetector(
                         onTap: _onSeeMoreTap,
                         child: Text(
-                          !(!_seeMore && _isTextOverFlowed) ? "간략히 보기" : "자세히 보기",
+                          !(!_seeMore && _isTextOverFlowed)
+                              ? "간략히 보기"
+                              : "자세히 보기",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: Sizes.size16,
@@ -273,25 +290,29 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
             right: 10,
             child: Column(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  child: Text("션후"),
+                  foregroundImage: NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/tik-tok-clone-seanwho.appspot.com/o/avatars%2FM4OW0jHZd8blvrarwUVkvDkNCBS2?alt=media"),
+                  child: Text(widget.videoData.creator),
                 ),
                 Gaps.v24,
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: _onMuteTap,
                   child: FaIcon(
-                    _isMuted ? FontAwesomeIcons.volumeXmark : FontAwesomeIcons.volumeHigh,
+                    _isMuted
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
                     color: Colors.white,
                   ),
                 ),
                 Gaps.v24,
                 VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(4135815789),
+                  text: S.of(context).likeCount(widget.videoData.likes),
                 ),
                 Gaps.v24,
                 GestureDetector(
@@ -299,7 +320,7 @@ class VideoPostState extends ConsumerState<VideoPost> with SingleTickerProviderS
                   onTap: () => _onCommentTap(context),
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: S.of(context).commentCount(31),
+                    text: S.of(context).commentCount(widget.videoData.comments),
                   ),
                 ),
                 Gaps.v24,
